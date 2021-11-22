@@ -1,4 +1,3 @@
-import Joi from "joi";
 import React, { useState } from "react";
 import SubmitButton from "./widgets/SubmitButton";
 import TextInput from "./widgets/TextInput";
@@ -12,8 +11,9 @@ const SimplePostForm = (props) => {
 
         const inputName = e.target.name;
         const inputValue = e.target.value;
-
-        const dataToValidate = { [inputName]: inputValue };
+        
+        const dataToValidate = props.formObject;
+        dataToValidate[inputName] = inputValue;
 
         props.children.map((child) => {
             let referencedInputName = child.props["refTo"];
@@ -30,7 +30,7 @@ const SimplePostForm = (props) => {
     };
 
     const validateValue = (dataToValidate, currentInputName) => {
-        const { error } = props.schema.validate(dataToValidate);
+        const { error, value } = props.schema.validate(dataToValidate);
 
         let errorMessage = "";
 

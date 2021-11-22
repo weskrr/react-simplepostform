@@ -8,12 +8,17 @@ function App() {
     password: Joi.string().min(2).max(3).required()
   });
 
+  const formObject = {
+    username: "",
+    password: ""
+  }
+
   return (
     <>
-      <SimplePostForm schema={schema} formObject={'username', 'password'}>
+      <SimplePostForm schema={schema} formObject={formObject}>
         <TextInput name="username" />
         <TextInput name="password" />
-      </SimplePostForm>
+      </SimplePostForm> 
     </>
   );
 }

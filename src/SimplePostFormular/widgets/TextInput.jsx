@@ -2,8 +2,12 @@ const TextInput = ({ name, inputError }) => {
     return (
         <>
             <p>{name}</p>
-            <input type='text' name={name} />
-            { (inputError[name] !== undefined) ? <p>{inputError[name]}</p> : null }
+
+            <label htmlFor={name}>
+                <input type='text' name={name} key={name} />
+                { (inputError[name] !== undefined) ? <p>{inputError[name]}</p> : null }
+            </label>
+
         </>
     );
 };

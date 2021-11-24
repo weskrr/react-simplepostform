@@ -30,15 +30,21 @@ const SimplePostForm = (props) => {
     };
 
     const validateValue = (dataToValidate, currentInputName) => {
-        const { error, value } = props.schema.validate(dataToValidate);
+        const { error, value } = props.schema.validate(dataToValidate, { abortEarly: false });
 
         let errorMessage = "";
 
-        if (error) {
-            errorMessage = error.details[0].message;
+        const currentIndexOfInputObject = Object.keys(props.formObject).indexOf(currentInputName);
+        const currentErrorField = error.details[currentIndexOfInputObject];
+
+        if(currentErrorField !== undefined){
+            errorMessage = currentErrorField.message;
+        } else {
+            errorMessage = "";
         }
 
         setError({ ...inputError, [currentInputName]: errorMessage });
+        
     };
 
     const handleSimplePostSubmit = (e) => {

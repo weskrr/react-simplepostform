@@ -5,12 +5,14 @@ function App() {
 
   const schema = Joi.object({
     username: Joi.string().min(3).max(8).required(),
-    password: Joi.string().min(2).max(3).required()
+    password: Joi.string().min(2).max(3).required(),
+    mail: Joi.string().min(2).max(3).required()
   });
 
   const formObject = {
     username: "",
-    password: ""
+    password: "",
+    mail: ""
   }
 
   return (
@@ -18,6 +20,7 @@ function App() {
       <SimplePostForm schema={schema} formObject={formObject}>
         <TextInput name="username" />
         <TextInput name="password" />
+        <TextInput name="mail" />
       </SimplePostForm> 
     </>
   );

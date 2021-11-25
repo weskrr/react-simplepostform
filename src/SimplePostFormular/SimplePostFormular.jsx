@@ -32,19 +32,24 @@ const SimplePostForm = (props) => {
     const validateValue = (dataToValidate, currentInputName) => {
         const { error, value } = props.schema.validate(dataToValidate, { abortEarly: false });
 
-        let errorMessage = "";
-
-        const currentIndexOfInputObject = Object.keys(props.formObject).indexOf(currentInputName);
-        const currentErrorField = error.details[currentIndexOfInputObject];
-
-        if(currentErrorField !== undefined){
-            errorMessage = currentErrorField.message;
-        } else {
-            errorMessage = "";
+        if(!error){
+            return setError({});
         }
 
-        setError({ ...inputError, [currentInputName]: errorMessage });
+        let errorMessage = "";        
         
+        console.log(error.details);
+
+        for (const [key, JoiDetail] of Object.entries(error.details)) {
+            
+            errorMessage = "";
+
+            if(JoiDetail.context["key"] === currentInputName){
+                return setError({ ...inputError, [currentInputName]: JoiDetail.message });
+            } else {
+                setError({ ...inputError, [currentInputName]: "" });
+            }
+        }
     };
 
     const handleSimplePostSubmit = (e) => {

@@ -1,70 +1,78 @@
-# Getting Started with Create React App
+# REACT SimplePostFormular
+SimplePostFormular is a easy and lightweight library to validate user data in realtime with npm Joi in REACT.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Installing and dependencies
 
-## Available Scripts
+You can install SimplePostFormular with
+``
+npm i react-simplepostformular
+``
 
-In the project directory, you can run:
+react-simplepostformular only runs with npm Joi. For more information see: https://www.npmjs.com/package/joi 
 
-### `npm start`
+You can install npm Joi with ``npm i joi``
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Example
+```js
+function App() {
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+  const schema = Joi.object({
+    username: Joi.string().min(3).max(8).required(),
+    password: Joi.string().min(2).max(3).required(),
+    mail: Joi.string().min(2).max(3).required()
+  });
 
-### `npm test`
+  const formObject = {
+    username: "",
+    password: "",
+    mail: ""
+  }
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+  return (
+    <>
+      <SimplePostForm schema={schema} formObject={formObject}>
+        <TextInput name="username" />
+        <TextInput name="password" />
+        <TextInput name="mail" />
+      </SimplePostForm> 
+    </>
+  );
+}
+```
 
-### `npm run build`
+## Using
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Build Schema
+First you need to build the Schema for your validation. Create a Joi Object for your input rules. If you need more information about npm Joi you need to read the Joi documentation. 
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Afer this you need to build up a object with all input fields that needs to be validated through Joi.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```js
+const formObject = {
+    username: "",
+    password: "",
+    mail: ""
+}
+```
 
-### `npm run eject`
+Make sure that your object key names are equal to the Joi Schema key names.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### Build Formular
+Import and use the SimplePostForm tag and inject it with your Joi Schema and the Input Object like here
+```js
+<SimplePostForm schema={schema} formObject={formObject}></SimplePostForm>
+```
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Use the SimplePostFormular **TextInput** Tag. Give them a name propertie to create a label and a REACT list key.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+```js
+return (
+    <>
+      <SimplePostForm schema={schema} formObject={formObject}>
+        <TextInput name="username" />
+        <TextInput name="password" />
+        <TextInput name="mail" />
+      </SimplePostForm> 
+    </>
+  );
+  ```

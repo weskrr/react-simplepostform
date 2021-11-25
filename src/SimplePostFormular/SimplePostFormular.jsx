@@ -30,20 +30,14 @@ const SimplePostForm = (props) => {
     };
 
     const validateValue = (dataToValidate, currentInputName) => {
-        const { error, value } = props.schema.validate(dataToValidate, { abortEarly: false });
+        const { error } = props.schema.validate(dataToValidate, { abortEarly: false });
 
         if(!error){
             return setError({});
         }
 
-        let errorMessage = "";        
-        
-        console.log(error.details);
-
         for (const [key, JoiDetail] of Object.entries(error.details)) {
             
-            errorMessage = "";
-
             if(JoiDetail.context["key"] === currentInputName){
                 return setError({ ...inputError, [currentInputName]: JoiDetail.message });
             } else {
@@ -58,8 +52,10 @@ const SimplePostForm = (props) => {
 
     return (
         <form method='post' onChange={handleSimplePostFormChange} onSubmit={handleSimplePostSubmit}>
-            {props.children.map((child) => {
-                return React.cloneElement(child, { inputError: inputError });
+            {props.children.map((child) => { return(
+                <React.Fragment key={child.props.name}>
+                    {  React.cloneElement(child, { inputError: inputError }) }
+                </React.Fragment>)
             })}
         </form>
     );
